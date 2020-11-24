@@ -65,9 +65,9 @@ def signup_view(request):
 def comment_upload(request):
     if request.method == 'POST':
         token = request.POST["token"]
-        comment_text = request.POST["comment_text"]
+        comment_text = request.POST["comment"]
 
-        data = {'token': token, 'comment_text': comment_text}
+        data = {'token': token, 'comment': comment_text}
         serializer = CommentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -83,3 +83,12 @@ def comment_view(request):
         query_set = Comment.objects.all()
         serializer = CommentSerializer(query_set, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+
+# @csrf_exempt
+# def comment_view(request):
+#     if request.method == 'POST':
+#         url = request.POST["url"]
+#         comment_obj = Comment.objects.get(url=url)
+#         serializer = CommentSerializer(comment_obj, many=True)
+#         return JsonResponse(serializer.data, safe=False)

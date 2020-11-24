@@ -16,4 +16,4 @@ class User(AbstractUser):
 
 class Comment(models.Model):
     token = models.CharField(max_length=20)
-    comment_text = models.TextField()
+    comment = models.TextField()

@@ -66,12 +66,12 @@ def comment_upload(request):
     if request.method == 'POST':
         token = request.POST["token"]
         comment_text = request.POST["comment"]
-
-        data = {'token': token, 'comment': comment_text}
+        url = request.POST["url"]
+        data = {'token': token, 'comment': comment_text, 'url': url}
         serializer = CommentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({'token': token, 'comment': comment_text},
+            return JsonResponse({'token': token, 'comment': comment_text, 'url': url},
                                 status=200)
         else:
             return JsonResponse(status=401)
@@ -87,8 +87,8 @@ def comment_view(request):
 
 # @csrf_exempt
 # def comment_view(request):
-#     if request.method == 'POST':
-#         url = request.POST["url"]
-#         comment_obj = Comment.objects.get(url=url)
-#         serializer = CommentSerializer(comment_obj, many=True)
+#     if request.method == 'GET':
+#         url = request.POST["https://image-mellow.s3.amazonaws.com/media/Youtube/1812_overture_-_usarmy_band.mp4"]
+#         query_set = Comment.objects.filter(url=url)
+#         serializer = CommentSerializer(query_set, many=True)
 #         return JsonResponse(serializer.data, safe=False)

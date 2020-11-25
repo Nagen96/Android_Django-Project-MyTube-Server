@@ -5,10 +5,10 @@ from .models import Video, Comment
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
-        fields = ['title', 'content', 'video', 'thumbnail']
+        fields = ['title', 'content', 'video', 'thumbnail', 'videoid']
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['token', 'comment', 'url']
+        fields = ['token', 'comment', 'videoid']

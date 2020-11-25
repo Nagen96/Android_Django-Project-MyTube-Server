@@ -66,29 +66,52 @@ def comment_upload(request):
     if request.method == 'POST':
         token = request.POST["token"]
         comment_text = request.POST["comment"]
-        url = request.POST["url"]
-        data = {'token': token, 'comment': comment_text, 'url': url}
+        videoid = request.POST["videoid"]
+        data = {'token': token, 'comment': comment_text, 'videoid': videoid}
         serializer = CommentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({'token': token, 'comment': comment_text, 'url': url},
+            return JsonResponse({'token': token, 'comment': comment_text, 'videoid': videoid},
                                 status=200)
         else:
             return JsonResponse(status=401)
 
 
 @csrf_exempt
-def comment_view(request):
+def comment_view_all(request):
     if request.method == 'GET':
         query_set = Comment.objects.all()
         serializer = CommentSerializer(query_set, many=True)
+        print(serializer.data)
+        return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+def comment_view(request, videoid):
+    if request.method == 'GET':
+        # url1 = 'https://image-mellow.s3.amazonaws.com/media/Youtube/1812_overture_-_usarmy_band.mp4'
+        # url2 = 'https://image-mellow.s3.amazonaws.com/media/Youtube/dance_dont_delay_-_twin_musicom.mp4'
+        query_set = Comment.objects.all().filter(videoid=videoid)
+        serializer = CommentSerializer(query_set, many=True)
+        print(serializer.data)
         return JsonResponse(serializer.data, safe=False)
 
 
 # @csrf_exempt
 # def comment_view(request):
 #     if request.method == 'GET':
-#         url = request.POST["https://image-mellow.s3.amazonaws.com/media/Youtube/1812_overture_-_usarmy_band.mp4"]
+#
+#     if request.method == 'POST':
+#         url = request.POST["url"]
 #         query_set = Comment.objects.filter(url=url)
+#         serializer = CommentSerializer(query_set, many=True)
+#         return JsonResponse(serializer.data, safe=False)
+
+# @csrf_exempt
+# def comment_view_all(request):
+#     if request.method == 'GET':
+#         url1 = 'https://image-mellow.s3.amazonaws.com/media/Youtube/1812_overture_-_usarmy_band.mp4'
+#         url2 = 'https://image-mellow.s3.amazonaws.com/media/Youtube/dance_dont_delay_-_twin_musicom.mp4'
+#         query_set = Comment.objects.filter(url=url1)
 #         serializer = CommentSerializer(query_set, many=True)
 #         return JsonResponse(serializer.data, safe=False)

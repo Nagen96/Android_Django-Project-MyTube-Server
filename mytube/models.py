@@ -8,7 +8,8 @@ class Video(models.Model):
     content = models.TextField()
     video = models.TextField()
     thumbnail = models.TextField()
-
+    videoid = models.TextField()
+    objects = models.Manager()
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=20)
@@ -17,4 +18,5 @@ class User(AbstractUser):
 class Comment(models.Model):
     token = models.CharField(max_length=20)
     comment = models.TextField()
-    url = models.TextField()
+    videoid = models.TextField()
+    objects = models.Manager()

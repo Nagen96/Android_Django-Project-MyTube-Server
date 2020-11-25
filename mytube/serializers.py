@@ -11,4 +11,4 @@ class VideoSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['token', 'comment', 'videoid']
+        fields = ['commentid', 'token', 'comment', 'videoid']

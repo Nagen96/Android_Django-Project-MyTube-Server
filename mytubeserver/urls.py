@@ -11,7 +11,7 @@ urlpatterns = [
     path('comment/upload/', views.comment_upload),
     path('comment/view/all', views.comment_view_all),
     path('comment/view/<str:videoid>/', views.comment_view),
-    # path('comment/delete/', views.comment_delete),
+    path('comment/delete/', views.comment_delete),
     path('admin/', admin.site.urls),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

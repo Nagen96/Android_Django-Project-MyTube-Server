@@ -23,11 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="9651ac93-32e6-4515-b371-51bba692482d">
-        <schema name="main" object-types="column, view, table, constraint, index, dataset trigger" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="9651ac93-32e6-4515-b371-51bba692482d">
@@ -124,7 +120,7 @@
           <session-management value="true" />
           <ddl-file-binding value="true" />
           <database-logging value="false" />
-          <connect-automatically value="true" />
+          <connect-automatically value="false" />
           <restore-workspace value="true" />
           <restore-workspace-deep value="true" />
           <environment-type value="default" />

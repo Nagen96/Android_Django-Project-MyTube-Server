@@ -15,7 +15,7 @@ def upload_video(request):
         serializer = VideoSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
+            return JsonResponse(serializer.data, status=200)
         return JsonResponse(serializer.errors, status=400)
 
 
@@ -40,7 +40,7 @@ def login(request):
                                 status=200)
         else:
             print("인증실패")
-            return JsonResponse(status=401)
+            return JsonResponse(status=400)
 
 
 @csrf_exempt
@@ -58,7 +58,7 @@ def signup_view(request):
                                 status=200)
 
         else:
-            return JsonResponse(status=401)
+            return JsonResponse(status=400)
 
 
 @csrf_exempt
@@ -74,7 +74,7 @@ def comment_upload(request):
             return JsonResponse({'token': token, 'comment': comment_text, 'videoid': videoid},
                                 status=200)
         else:
-            return JsonResponse(status=401)
+            return JsonResponse(status=400)
 
 
 @csrf_exempt
@@ -115,3 +115,19 @@ def comment_view(request, videoid):
 #         query_set = Comment.objects.filter(url=url1)
 #         serializer = CommentSerializer(query_set, many=True)
 #         return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+def comment_delete(request):
+    if request.method == 'POST':
+        token = request.POST["token"]
+        videoid = request.POST["videoid"]
+        commentid = request.POST["commentid"]
+
+        obj = Comment.objects.get(commentid=commentid, token=token)
+        if obj is not None and (token == obj.token):
+            obj.delete()
+            return JsonResponse({'responseok': token}, status=200)
+
+        else:
+            return JsonResponse(status=400)
